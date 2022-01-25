@@ -6,6 +6,7 @@
   "bin": {
     "aeppic-pack": "./bin/aeppic-pack.js"
   },
+  "private": false,
   "files": [
     "content",
     "bin",
