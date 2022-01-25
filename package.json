@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aeppic/quartermaster.git"
+    "url": "git+https://github.com/aeppic/pack.git"
   },
   "keywords": [
     "packaging",
@@ -34,9 +34,9 @@
   "author": "Matthias Goetzke",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/aeppic/quartermaster/issues"
+    "url": "https://github.com/aeppic/pack/issues"
   },
-  "homepage": "https://github.com/aeppic/quartermaster#readme",
+  "homepage": "https://github.com/aeppic/pack#readme",
   "dependencies": {
     "cross-var": "^1.1.0",
     "rimraf": "^3.0.2",
