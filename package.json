@@ -23,6 +23,9 @@
     "type": "git",
     "url": "git+https://github.com/aeppic/pack.git"
   },
+  "publishConfig": {
+    "registry": " https://registry.npmjs.org"
+  },
   "keywords": [
     "packaging",
     "tool",
