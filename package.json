@@ -16,8 +16,8 @@
   ],
   "type": "module",
   "scripts": {
-    "build": "esbuild src/index.ts --platform=node --format=esm --target=es2020,node14 --external:./node_modules/* --bundle --outdir=lib",
-    "build:watch": "npm run build -- --watch",
+    "build": "node build.js",
+    "build:watch": "node build.js --watch",
     "start": "node ./bin/aeppic-pack.js"
   },
   "repository": {
