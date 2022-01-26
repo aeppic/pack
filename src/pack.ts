@@ -82,7 +82,7 @@ export async function pack(options: Options)
     return exit(2, 'Trouble connecting to Docker');
   }
 
-  const serviceModulesPath = path.relative(currentWorkingDirectory, path.resolve(outputFolderPath, 'service-modules.tar'))
+  const nodeModulesTarPath = path.relative(currentWorkingDirectory, path.resolve(outputFolderPath, 'node_modules.tar'))
 
   const filesToIncludeFromNpmPackFile = primaryPackFileInfo.files.map((f: { path: string }) => path.resolve(f.path)).map((absolutePath: string) => path.relative(currentWorkingDirectory, absolutePath))
 
@@ -99,10 +99,10 @@ export async function pack(options: Options)
     sync: true,
   }, [
     ...filesToIncludeFromNpmPackFile,
-    `@${serviceModulesPath}`,
+    `@${nodeModulesTarPath}`,
   ])
 
-  await fs.unlink(serviceModulesPath)
+  await fs.unlink(nodeModulesTarPath)
   await sleep(500)
 
   if (options.outputPath) {
