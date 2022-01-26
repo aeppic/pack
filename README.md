@@ -32,3 +32,7 @@ Two Dockerfiles are included. One for pnpm (Default) and one using npm, but that
 4) Create a new tgz containing the files from step 1 and the node_modules from step 2/3
 
 Important: Make sure the package.json files field includes all files required for runtime
+
+## Publishing
+
+Publish this package with `--access=public`. For some reason npm doesn't use the `public: true` marker in the package.json and an explicit option is needed for publishing to a scope.
