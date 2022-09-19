@@ -13,9 +13,9 @@ RUN apt-get update
 RUN curl -sL https://deb.nodesource.com/setup_16.x  | bash -
 RUN apt-get -y install nodejs
 RUN apt-get -y install build-essential
-RUN apt-get -y install python3.10
-RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 10
-RUN update-alternatives --query python3
+#RUN apt-get -y install python3.10
+#RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 10
+#RUN update-alternatives --query python3
 
 # Create and define the working directory.
 RUN mkdir /usr/src/service
