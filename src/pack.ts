@@ -71,6 +71,8 @@ export async function pack(options: Options)
   const gitConfigFilePath = path.resolve(homedir(), '.gitconfig')
   const gitCredentialsFilePath = path.resolve(homedir(), '.git-credentials')
   
+  // const optionalSecrets = [ name: 'ssh']
+
   // process.env.DOCKER_BUILDKIT='1'
   // https://github.com/moby/buildkit#local-directory
   const output = shell.exec(
