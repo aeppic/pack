@@ -67,11 +67,12 @@ export async function pack(options: Options)
   rimraf.sync(outputFolderPath)
   await fs.mkdir(outputFolderPath)
 
+  const keyFilePath = path.resolve(homedir(), '.ssh', 'id_rsa')
+
   const optionalSecrets = [
-    { name: 'ssh', filePath: path.resolve(homedir(), '.ssh', 'id_rsa') },
     { name: 'npm', filePath: path.resolve(homedir(), '.npmrc') },
     { name: 'gitconfig', filePath: path.resolve(homedir(), '.gitconfig') },
-    { name: 'gitcredentials', filePath: path.resolve(homedir(), '.git-credentials') }
+    { name: 'gitcredentials', filePath: path.resolve(homedir(), '.git-credentials') },
   ]
 
   const availableSecrets = optionalSecrets.filter(({ filePath }) => {
@@ -79,7 +80,6 @@ export async function pack(options: Options)
       accessSync(filePath, constants.R_OK)
       return true
     } catch (error) {
-      console.warn('Could not find secret file', filePath)
       return false
     }
   })
