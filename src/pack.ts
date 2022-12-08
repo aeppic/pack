@@ -1,5 +1,6 @@
 import { homedir } from 'node:os'
 import fs from 'node:fs/promises'
+import { accessSync, constants } from 'node:fs'
 import path from 'node:path'
 
 // import { createReadStream } from 'node:fs'
@@ -66,17 +67,29 @@ export async function pack(options: Options)
   rimraf.sync(outputFolderPath)
   await fs.mkdir(outputFolderPath)
 
-  const npmRcFilePath = path.resolve(homedir(), '.npmrc')
-  const keyFilePath = path.resolve(homedir(), '.ssh', 'id_rsa')
-  const gitConfigFilePath = path.resolve(homedir(), '.gitconfig')
-  const gitCredentialsFilePath = path.resolve(homedir(), '.git-credentials')
-  
-  // const optionalSecrets = [ name: 'ssh']
+  const optionalSecrets = [
+    { name: 'ssh', filePath: path.resolve(homedir(), '.ssh', 'id_rsa') },
+    { name: 'npm', filePath: path.resolve(homedir(), '.npmrc') },
+    { name: 'gitconfig', filePath: path.resolve(homedir(), '.gitconfig') },
+    { name: 'gitcredentials', filePath: path.resolve(homedir(), '.git-credentials') }
+  ]
+
+  const availableSecrets = optionalSecrets.filter(({ filePath }) => {
+    try { 
+      accessSync(filePath, constants.R_OK)
+      return true
+    } catch (error) {
+      console.warn('Could not find secret file', filePath)
+      return false
+    }
+  })
+
+  const secretArguments = availableSecrets.map(({ name, filePath }) => `--secret id=${name},src=${filePath}`).join(' ')
 
   // process.env.DOCKER_BUILDKIT='1'
   // https://github.com/moby/buildkit#local-directory
   const output = shell.exec(
-    `DOCKER_BUILDKIT=1 docker build --ssh default=${keyFilePath} ${currentWorkingDirectory} -f ${dockerFilePath} --platform ${options.platform} -t secure-app-secrets --secret id=npm,src=${npmRcFilePath} --secret id=gitconfig,src=${gitConfigFilePath} --secret id=gitcredentials,src=${gitCredentialsFilePath} --output type=local,dest=${outputFolderPath}`,
+    `DOCKER_BUILDKIT=1 docker build --ssh default=${keyFilePath} ${currentWorkingDirectory} -f ${dockerFilePath} --platform ${options.platform} -t secure-app-secrets ${secretArguments} --output type=local,dest=${outputFolderPath}`,
     {
       silent: options.verbose !== true,
     })
