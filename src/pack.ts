@@ -69,7 +69,7 @@ export async function pack(options: Options)
   const npmRcFilePath = path.resolve(homedir(), '.npmrc')
   const keyFilePath = path.resolve(homedir(), '.ssh', 'id_rsa')
   const gitConfigFilePath = path.resolve(homedir(), '.gitconfig')
-  const gitCredentialsFilePath = path.resolve(homedir(), '.gitcredentials')
+  const gitCredentialsFilePath = path.resolve(homedir(), '.git-credentials')
   
   // process.env.DOCKER_BUILDKIT='1'
   // https://github.com/moby/buildkit#local-directory
