@@ -32,7 +32,7 @@ COPY pnpm-lock.yaml ./
 RUN mkdir -p -m 0600 ~/.ssh
 RUN ssh-keyscan -t rsa dev.curasystems.com >> ~/.ssh/known_hosts
 
-RUN --mount=type=ssh --mount=type=secret,id=npm,target=/root/.npmrc pnpm install --prod --frozen-lockfile
+RUN --mount=type=ssh --mount=type=secret,id=gitconfig,target=/root/.gitconfig --mount=type=secret,id=gitcredentials,target=/root/.gitcredentials  --mount=type=secret,id=npm,target=/root/.npmrc pnpm install --prod --frozen-lockfile
 RUN rm package.json
 RUN tar cf node_modules.tar *
 
