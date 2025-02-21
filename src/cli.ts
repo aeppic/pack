@@ -50,6 +50,12 @@ function packArguments(yargs: typeof args) {
       type: 'boolean',
       default: false,
     })
+    .option('dockerEngine', {
+      type: 'string',
+      default: 'docker',
+      description: 'Override the docker engine to be used',
+      describe: 'e.g. use Podman to package: `--docker-engine=podman`',
+    })
 
   return yargs
 }

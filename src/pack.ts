@@ -22,6 +22,7 @@ type Options = {
   verbose: boolean
   dontEmitVersion: boolean
   outputPath: boolean
+  dockerEngine: string
 }
 
 export async function pack(options: Options)
@@ -88,8 +89,11 @@ export async function pack(options: Options)
 
   // process.env.DOCKER_BUILDKIT='1'
   // https://github.com/moby/buildkit#local-directory
+
+  const dockerEngine = options.dockerEngine ?? 'docker'
+
   const output = shell.exec(
-    `DOCKER_BUILDKIT=1 docker build --ssh default=${keyFilePath} ${currentWorkingDirectory} -f ${dockerFilePath} --platform ${options.platform} -t secure-app-secrets ${secretArguments} --output type=local,dest=${outputFolderPath}`,
+    `DOCKER_BUILDKIT=1 ${dockerEngine} build --ssh default=${keyFilePath} ${currentWorkingDirectory} -f ${dockerFilePath} --platform ${options.platform} -t secure-app-secrets ${secretArguments} --output type=local,dest=${outputFolderPath}`,
     {
       silent: options.verbose !== true,
     })
