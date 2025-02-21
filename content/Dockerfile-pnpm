@@ -27,7 +27,7 @@ RUN mkdir /usr/src/service
 WORKDIR /usr/src/service
 
 # Install pnpm globally
-RUN npm i -g pnpm
+RUN npm i -g pnpm@8.x.x
 
 # Install the application's dependencies.
 COPY package.json ./
